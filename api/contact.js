@@ -9,8 +9,8 @@ module.exports = async (req, res) => {
   const clean = (v) => (v || '').toString().slice(0, 1000).trim();
   const name = clean(b.name), email = clean(b.email), phone = clean(b.phone);
   const product = clean(b.product), message = clean(b.message);
-  if (!name || !email) return res.redirect(303, '/contact/?sent=0');
-  if (!process.env.RESEND_API_KEY) return res.redirect(303, '/contact/?sent=0');
+  if (!name || !email) return res.redirect(303, '/contact/?sent=0&r=input');
+  if (!process.env.RESEND_API_KEY) return res.redirect(303, '/contact/?sent=0&r=cfg');
 
   const text = [
     `Ime i prezime: ${name}`,
@@ -36,8 +36,8 @@ module.exports = async (req, res) => {
         text,
       }),
     });
-    return res.redirect(303, r.ok ? '/contact/?sent=1' : '/contact/?sent=0');
+    return res.redirect(303, r.ok ? '/contact/?sent=1' : '/contact/?sent=0&r=api' + r.status);
   } catch {
-    return res.redirect(303, '/contact/?sent=0');
+    return res.redirect(303, '/contact/?sent=0&r=exc');
   }
 };
