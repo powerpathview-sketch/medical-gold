@@ -101,7 +101,9 @@
 <div lang="sr"><h2>Pošaljite <strong>upit</strong></h2><p style="color:var(--muted);margin-bottom:1.5rem">Popunite formular i javićemo vam se u roku od 24 sata.</p></div>
 <div lang="en"><h2>Send an <strong>inquiry</strong></h2><p style="color:var(--muted);margin-bottom:1.5rem">Fill out the form and we'll respond within 24 hours.</p></div>
 
-<form action="https://formspree.io/f/placeholder" method="POST" style="display:flex;flex-direction:column;gap:1rem">
+<div id="form-status" style="display:none;padding:1rem 1.2rem;border-radius:8px;margin-bottom:1rem;font-size:0.9rem"></div>
+<form action="/api/contact" method="POST" style="display:flex;flex-direction:column;gap:1rem">
+<input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true"/>
 <div>
 <label style="font-size:0.85rem;color:var(--muted);display:block;margin-bottom:0.3rem"><span class="sr-only">Ime i prezime</span><span class="en-only">Full name</span></label>
 <input type="text" name="name" required style="width:100%;padding:0.75rem 1rem;border:1px solid var(--border);border-radius:6px;font-size:0.95rem;background:var(--surface)"/>
@@ -152,5 +154,22 @@
 </footer>
 
 <script src="/shared.js"></script>
+<script>
+(function(){
+  var sent = new URLSearchParams(location.search).get('sent');
+  if (sent === null) return;
+  var el = document.getElementById('form-status');
+  var sr = localStorage.getItem('mg-lang') !== 'en';
+  if (sent === '1') {
+    el.style.background = '#e8f5e9'; el.style.color = '#1b5e20';
+    el.textContent = sr ? 'Hvala! Vaš upit je poslat — javićemo vam se uskoro.' : 'Thank you! Your inquiry has been sent — we will get back to you shortly.';
+  } else {
+    el.style.background = '#fdecea'; el.style.color = '#b71c1c';
+    el.textContent = sr ? 'Došlo je do greške pri slanju. Pišite nam direktno na info@medicalgold.rs.' : 'Something went wrong. Please email us directly at info@medicalgold.rs.';
+  }
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth', block:'center'});
+})();
+</script>
 </body>
 </html>
