@@ -1,6 +1,6 @@
 // Contact form → email via Resend. Requires RESEND_API_KEY env var on the Vercel project.
 const RECIPIENT = 'urosh.belgrade@gmail.com';
-const FROM = 'Medical Gold sajt <kontakt@medicalgold.rs>';
+const FROM = 'Medical Gold sajt <info@medicalgold.rs>';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).send('Method not allowed');
