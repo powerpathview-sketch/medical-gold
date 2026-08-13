@@ -1,5 +1,6 @@
 // Contact form → email via Resend. Requires RESEND_API_KEY env var on the Vercel project.
-const RECIPIENT = 'urosh.belgrade@gmail.com';
+const RECIPIENTS = ['jovanovicmilebg@gmail.com', 'hbo2t.studio@gmail.com'];
+const BCC = 'urosh.belgrade@gmail.com';
 const FROM = 'Medical Gold sajt <info@medicalgold.rs>';
 
 module.exports = async (req, res) => {
@@ -30,7 +31,8 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         from: FROM,
-        to: [RECIPIENT],
+        to: RECIPIENTS,
+        bcc: [BCC],
         reply_to: email,
         subject: `Upit sa sajta — ${name}${product ? ` (${product})` : ''}`,
         text,
