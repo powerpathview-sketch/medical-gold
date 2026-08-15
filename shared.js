@@ -1,5 +1,5 @@
 // Site version — bump on every deploy
-const MG_VERSION = '1.6';
+const MG_VERSION = '1.7';
 document.addEventListener('DOMContentLoaded', () => {
   const f = document.querySelector('footer .container');
   if (f) {
